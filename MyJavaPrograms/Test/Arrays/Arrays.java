@@ -3,12 +3,12 @@ package Arrays;
 import java.util.Scanner;
 
 public class Arrays {
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
+    public static void main(final String[] args) {
+        final Scanner in = new Scanner(System.in);
         byte size;
         System.out.println("enter array size ");
-        size=in.nextByte();
-        int[] array= new int[size];
+        size = in.nextByte();
+        final int[] array = new int[size];
         
         System.out.println("Enter the elements of array: ");
         for(int i = 0; i < size;i++){
