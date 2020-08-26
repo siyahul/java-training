@@ -1,34 +1,26 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
-
+import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
 public class Maze{
-
-    static ArrayList<Maz> mazes= new ArrayList<Maz>();
     
-    
-    public static void main(final String[] args) {
+    public static void main(final String[] args) throws FileNotFoundException{
+        ArrayList<Maz> mazes= new ArrayList<Maz>();
         Maz m = new Maz();
-        Maz n = new Maz();
-        int[][] maze1 ={
-            {2,1,1,1},
-            {0,0,1,1},
-            {0,0,0,1}
-        };
-        m.maze=maze1;
-        m.start=new Position(0, 3);
-        m.path=new LinkedList<Position>();
-
-        int[][] maze2 ={
-            {0,1,1,1},
-            {0,0,1,1},
-            {2,1,1,1}
-        };
-        n.maze=maze2;
-        n.start=new Position(0, 3);
-        n.path=new LinkedList<Position>();
-        
+        Scanner in = new Scanner(new File("maze.txt"));
+        int rows=Integer.parseInt(in.nextLine());
+        m.maze = new int[rows][];
+        for (int i = 0; i <rows; i++){
+            String lines = in.nextLine();
+            m.maze[i]=Arrays.stream(lines.split(",")).mapToInt(Integer::parseInt).toArray();
+        }
+        m.start = new Position(Integer.parseInt(in.nextLine()),Integer.parseInt(in.nextLine()));
+        m.path = new LinkedList<Position>();
         mazes.add(m);
-        mazes.add(n);
+
+        
         int i=0;
         while(i<mazes.size()){
             if (mazeSolver(mazes.get(i))) {
@@ -40,7 +32,6 @@ public class Maze{
             i++;
         }
     }
-
     private static boolean mazeSolver(Maz m) {
         Position p= m.start;
         m.path.push(p);
@@ -71,7 +62,6 @@ public class Maze{
                     continue;
                 }
             }
-
             // up
             if (isValid(y - 1, x,m)) {
                 if (m.maze[y - 1][x] == 2) {
@@ -101,11 +91,10 @@ public class Maze{
             }
         }
     }
-
     public static boolean isValid(final int y, final int x,Maz m) {
         if(y>=m.maze.length||y<0||x>=m.maze[y].length||x<0){
             return false;
         }
-        return true;    
+        return true;
     }
 }
